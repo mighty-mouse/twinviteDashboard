@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript" src="js/underscore-min.js"></script>
+		<script type="text/javascript" src="js/backbone-min.js"></script>
+		
+		<script type="text/javascript">
+			$(document).ready(
+				function(){
+					myCollection = new DashboardCollection();
+
+					dashboard = new DashboardView(
+						{
+							el:"#dashboard",
+							collection:myCollection
+						}
+					);					
+				}
+			);
+			DashboardView = Backbone.View.extend({
+				initialize: function(){
+					//this.collection.sync('read',this);
+					this.collection.fetch();
+					this.listenTo(this.collection,'reset',this.onUpdate)
+					console.log (this.collection);
+				},
+				onUpdate:function(){
+					console.log (this.collection);
+					_.each(this.collection.models,function(e,i){
+						console.log(e.attributes.handle);
+						this.$el.append("<h4>"+e.attributes.handle+"</h4>");
+					},this);
+				}
+			});
+			var DashboardModel = Backbone.Model.extend({
+				//urlRoot: './data/data.json'
+				url: 'http://localhost:8090/data/data.json'
+			});
+			var DashboardCollection = Backbone.Collection.extend({
+				model: DashboardModel,
+				//url : 'http://twinvite.myt:8000/api/invitee/?format=json'
+				//url: 'data.json',
+				url: 'http://localhost:8090/data/data.json',
+				parse: function(resp, xhr) {
+					console.dir(resp.objects);
+        	return resp.objects
+
+    		}
+
+			});
+		</script>
+	</head>
+	<body>
+		<div id="dashboard">
+			<ul></ul>
+		</div>
+	</body>
+</html>
