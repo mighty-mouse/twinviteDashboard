@@ -1,0 +1,182 @@
+[
+    {
+        "accepted": true,
+        "current_seed": null,
+        "event": "The Experience",
+        "handle": "@lauraserra",
+        "id": 23,
+        "inviter": null,
+        "seeder": true
+    },
+    {
+        "accepted": true,
+        "current_seed": "10",
+        "event": "The Experience",
+        "handle": "@ashley_bartlett",
+        "id": 24,
+        "inviter": "@lauraserra",
+        "seeder": false
+    },
+    {
+        "accepted": true,
+        "current_seed": "10",
+        "event": "The Experience",
+        "handle": "@jess_swan",
+        "id": 25,
+        "inviter": "@ashley_bartlett",
+        "seeder": false
+    },
+    {
+        "accepted": true,
+        "current_seed": "10",
+        "event": "The Experience",
+        "handle": "@mereklapowich",
+        "id": 26,
+        "inviter": "@jess_swan",
+        "seeder": false
+    },
+    {
+        "accepted": true,
+        "current_seed": "10",
+        "event": "The Experience",
+        "handle": "@narrativePR",
+        "id": 27,
+        "inviter": "@mereklapowich",
+        "seeder": false
+    },
+    {
+        "accepted": true,
+        "current_seed": "10",
+        "event": "The Experience",
+        "handle": "@pawsforthecause",
+        "id": 28,
+        "inviter": "@narrativePR",
+        "seeder": false
+    },
+    {
+        "accepted": true,
+        "current_seed": "10",
+        "event": "The Experience",
+        "handle": "@shelley_thomas",
+        "id": 29,
+        "inviter": "@pawsforthecause",
+        "seeder": false
+    },
+    {
+        "accepted": true,
+        "current_seed": null,
+        "event": "The Experience",
+        "handle": "@chefgrantsoto",
+        "id": 30,
+        "inviter": null,
+        "seeder": true
+    },
+    {
+        "accepted": true,
+        "current_seed": null,
+        "event": "The Experience",
+        "handle": "@sidewalkhustle",
+        "id": 31,
+        "inviter": null,
+        "seeder": true
+    },
+    {
+        "accepted": true,
+        "current_seed": null,
+        "event": "The Experience",
+        "handle": "@randibergman",
+        "id": 32,
+        "inviter": null,
+        "seeder": true
+    },
+    {
+        "accepted": true,
+        "current_seed": null,
+        "event": "The Experience",
+        "handle": "@hadisworld",
+        "id": 33,
+        "inviter": null,
+        "seeder": true
+    },
+    {
+        "accepted": false,
+        "current_seed": null,
+        "event": "The Experience",
+        "handle": "@shedoesthecity",
+        "id": 34,
+        "inviter": null,
+        "seeder": true
+    },
+    {
+        "accepted": true,
+        "current_seed": null,
+        "event": "The Experience",
+        "handle": "@markmunroemusic",
+        "id": 35,
+        "inviter": null,
+        "seeder": true
+    },
+    {
+        "accepted": true,
+        "current_seed": null,
+        "event": "The Experience",
+        "handle": "@gtonge1",
+        "id": 37,
+        "inviter": null,
+        "seeder": true
+    },
+    {
+        "accepted": true,
+        "current_seed": null,
+        "event": "The Experience",
+        "handle": "@maxvaliquette",
+        "id": 38,
+        "inviter": null,
+        "seeder": true
+    },
+    {
+        "accepted": true,
+        "current_seed": null,
+        "event": "The Experience",
+        "handle": "@amandaalvaro",
+        "id": 40,
+        "inviter": null,
+        "seeder": true
+    },
+    {
+        "accepted": true,
+        "current_seed": null,
+        "event": "The Experience",
+        "handle": "@maggiewrobel",
+        "id": 41,
+        "inviter": null,
+        "seeder": true
+    },
+    {
+        "accepted": false,
+        "current_seed": null,
+        "event": "The Experience",
+        "handle": "@la_carnita",
+        "id": 42,
+        "inviter": null,
+        "seeder": true
+    },
+    {
+        "accepted": true,
+        "current_seed": "17",
+        "event": "The Experience",
+        "handle": "@nicperagine ",
+        "id": 44,
+        "inviter": "@gtonge1",
+        "seeder": false
+    },
+    {
+        "accepted": true,
+        "current_seed": "17",
+        "event": "The Experience",
+        "handle": "@erinkmckay",
+        "id": 45,
+        "inviter": "@nicperagine ",
+        "seeder": false
+    }
+]

@@ -8,17 +8,17 @@
 		<script type="text/javascript">
 			$(document).ready(
 				function(){
-					myCollection = new DashboardCollection();
+					myCollection = new InviteeCollection();
 
-					dashboard = new DashboardView(
+					invitee = new InviteeView(
 						{
-							el:"#dashboard",
+							el:"#invitee",
 							collection:myCollection
 						}
 					);					
 				}
 			);
-			DashboardView = Backbone.View.extend({
+			InviteeView = Backbone.View.extend({
 				initialize: function(){
 					//this.collection.sync('read',this);
 					this.collection.fetch();
@@ -28,31 +28,42 @@
 				onUpdate:function(){
 					console.log (this.collection);
 					_.each(this.collection.models,function(e,i){
-						console.log(e.attributes.handle);
-						this.$el.append("<h4>"+e.attributes.handle+"</h4>");
+						var userHandle = e.attributes.handle;
+						userHandle = userHandle.replace(/@/g,'');
+						console.log(userHandle);
+						var imageStr = "https://api.twitter.com/1/users/profile_image?"+userHandle+"=twitterapi&size=bigger";
+						////////////////////////////PULL TWITTER IMAGE CODE///////////////////////////////////
+						// https://api.twitter.com/1/users/profile_image?screen_name=twitterapi&size=bigger //
+						//////////////////////////////////////////////////////////////////////////////////////
+						//<div id="user">
+						//	<img src=""
+						this.$el.append("<h4>"+userHandle+"</h4>");
 					},this);
 				}
 			});
-			var DashboardModel = Backbone.Model.extend({
+			var InviteeModel = Backbone.Model.extend({
 				//urlRoot: './data/data.json'
-				url: 'http://localhost:8090/data/data.json'
+				url: 'http://localhost:8090/data/invitee.json'
+				//url: 'http://twinvite.myt:8000/api/v1/invitee/?format=json&limit=250'
 			});
-			var DashboardCollection = Backbone.Collection.extend({
-				model: DashboardModel,
+			var InviteeCollection = Backbone.Collection.extend({
+				model: InviteeModel,
 				//url : 'http://twinvite.myt:8000/api/invitee/?format=json'
 				//url: 'data.json',
-				url: 'http://localhost:8090/data/data.json',
-				parse: function(resp, xhr) {
-					console.dir(resp.objects);
-        	return resp.objects
+				url: 'http://localhost:8090/data/invitee.json',
 
-    		}
+				//url: 'http://twinvite.myt:8000/api/v1/invitee/?format=json&limit=250',
+				/*parse: function(resp, xhr) {
+					//console.dir(resp.objects);
+        	//return resp.objects
+
+    		}*/
 
 			});
 		</script>
 	</head>
 	<body>
-		<div id="dashboard">
+		<div id="invitee">
 			<ul></ul>
 		</div>
 	</body>

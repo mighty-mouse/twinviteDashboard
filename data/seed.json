@@ -1,0 +1,102 @@
+[
+    {
+        "id": 10,
+        "max_seeder_chain": "6",
+        "seeder": "@lauraserra"
+    },
+    {
+        "id": 11,
+        "max_seeder_chain": "10",
+        "seeder": "@chefgrantsoto"
+    },
+    {
+        "id": 12,
+        "max_seeder_chain": "10",
+        "seeder": "@sidewalkhustle"
+    },
+    {
+        "id": 13,
+        "max_seeder_chain": "10",
+        "seeder": "@randibergman"
+    },
+    {
+        "id": 14,
+        "max_seeder_chain": "10",
+        "seeder": "@hadisworld"
+    },
+    {
+        "id": 15,
+        "max_seeder_chain": "10",
+        "seeder": "@shedoesthecity"
+    },
+    {
+        "id": 16,
+        "max_seeder_chain": "10",
+        "seeder": "@markmunroemusic"
+    },
+    {
+        "id": 17,
+        "max_seeder_chain": "10",
+        "seeder": "@gtonge1"
+    },
+    {
+        "id": 18,
+        "max_seeder_chain": "10",
+        "seeder": "@maxvaliquette"
+    },
+    {
+        "id": 19,
+        "max_seeder_chain": "10",
+        "seeder": "@amandaalvaro"
+    },
+    {
+        "id": 22,
+        "max_seeder_chain": "10",
+        "seeder": "@maggiewrobel"
+    },
+    {
+        "id": 23,
+        "max_seeder_chain": "10",
+        "seeder": "@la_carnita"
+    },
+    {
+        "id": 24,
+        "max_seeder_chain": "10",
+        "seeder": "@pliving"
+    },
+    {
+        "id": 25,
+        "max_seeder_chain": "4",
+        "seeder": "@samb00ka"
+    },
+    {
+        "id": 26,
+        "max_seeder_chain": "10",
+        "seeder": "@bizbashtoronto"
+    },
+    {
+        "id": 27,
+        "max_seeder_chain": "10",
+        "seeder": "@blogto"
+    },
+    {
+        "id": 28,
+        "max_seeder_chain": "10",
+        "seeder": "@sarahewaldock"
+    },
+    {
+        "id": 29,
+        "max_seeder_chain": "10",
+        "seeder": "@citybites"
+    },
+    {
+        "id": 30,
+        "max_seeder_chain": "10",
+        "seeder": "@paychen"
+    },
+    {
+        "id": 31,
+        "max_seeder_chain": "10",
+        "seeder": "@styleblog"
+    }
+]
