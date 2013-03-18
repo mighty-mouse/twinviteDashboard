@@ -37,14 +37,9 @@
 					console.log (this.collection);
 					_.each(this.collection.models,function(e,i){
 						var userHandle = e.attributes.handle;
+						//remove @ and any spaces
 						userHandle = userHandle.replace(/@/g,'');
-						//console.log(userHandle);
-						var imageStr = "https://api.twitter.com/1/users/profile_image?screen_name="+userHandle+"&size=bigger";
-						////////////////////////////PULL TWITTER IMAGE CODE///////////////////////////////////
-						// https://api.twitter.com/1/users/profile_image?screen_name=twitterapi&size=bigger //
-						//////////////////////////////////////////////////////////////////////////////////////
-						//<div id="user">
-						//	<img src=""
+						userHandle = userHandle.replace(/\s+/g, '');
 						this.$el.append("<h4>@"+userHandle+"</h4>");
 						this.$el.append('<img src="https://api.twitter.com/1/users/profile_image?screen_name='+userHandle+'&size=bigger" /><br/>');
 					},this);
@@ -59,8 +54,7 @@
 				model: InviteeModel,
 				//url : 'http://twinvite.myt:8000/api/invitee/?format=json'
 				//url: 'data.json',
-				url: 'http://localhost:8090/data/invitee.json',
-
+				url: 'http://localhost:8090/data/invitee.json'
     	});
 			
 
@@ -77,9 +71,8 @@
 						
 						var seedHandle = e.attributes.seeder;
 						seedHandle = seedHandle.replace(/@/g,'');
-						console.log(seedHandle);
-						
-						var imageStr = "<img str='https://api.twitter.com/1/users/profile_image?screen_name="+seedHandle+"&size=bigger' />";
+						seedHandle = seedHandle.replace(/\s+/g, '');
+					
 						this.$el.append("<h2>#"+seedHandle+"</h2>");
 						this.$el.append('<img src="https://api.twitter.com/1/users/profile_image?screen_name='+seedHandle+'&size=bigger" /><br/>');
 					},this);
@@ -94,7 +87,7 @@
 				model: SeedModel,
 				//url : 'http://twinvite.myt:8000/api/invitee/?format=json'
 				//url: 'data.json',
-				url: 'http://localhost:8090/data/seed.json',
+				url: 'http://localhost:8090/data/seed.json'
     	});
 		</script>
 	</head>
