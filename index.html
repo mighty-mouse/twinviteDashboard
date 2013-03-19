@@ -8,60 +8,56 @@
 		<script type="text/javascript">
 			$(document).ready(
 				function(){
+					
 					myInviteeCollection = new InviteeCollection();
+					pr = new FeedProcessor(myInviteeCollection);
+
 					invitee = new InviteeView(
-						{
-							el:"#invitee",
-							collection:myInviteeCollection
-						}
+					{
+						el:"#invitee",
+						collection:myInviteeCollection,
+						process:pr
+					}
 					);
 					mySeedCollection = new SeedCollection();
+					mySeedCollection.fetch();
 					seed = new SeedView(
-						{
-							el:"#seed",
-							collection:mySeedCollection
-						}
-					);					
+					{
+						el:"#seed",
+						collection:mySeedCollection
+					}
+					);
 				}
-			);
+				);
 
 			/////////////////////////////////////////////////////////////////////////////////Invitee Data 
 			InviteeView = Backbone.View.extend({
 				initialize: function(){
 					//this.collection.sync('read',this);
+					this._p = this.options.process
 					this.collection.fetch();
 					this.listenTo(this.collection,'reset',this.onUpdate)
 					console.log (this.collection);
 				},
 				onUpdate:function(){
-					console.log (this.collection);
+					//how to reference  information within the feedProcessor
+					console.log (this._p.get('handle',5));
+					//this._p.get('invitee',2);
 					_.each(this.collection.models,function(e,i){
-						var userHandle = e.attributes.handle;
+						/*var userHandle = e.attributes.handle;
 						//remove @ and any spaces
 						userHandle = userHandle.replace(/@/g,'');
 						userHandle = userHandle.replace(/\s+/g, '');
 						this.$el.append("<h4>@"+userHandle+"</h4>");
-						this.$el.append('<img src="https://api.twitter.com/1/users/profile_image?screen_name='+userHandle+'&size=bigger" /><br/>');
+						this.$el.append('<img src="https://api.twitter.com/1/users/profile_image?screen_name='+userHandle+'&size=bigger" /><br/>');*/
 					},this);
 				}
 			});
-			var InviteeModel = Backbone.Model.extend({
-				//urlRoot: './data/data.json'
-				url: 'http://localhost:8090/data/invitee.json'
-				//url: 'http://twinvite.myt:8000/api/v1/invitee/?format=json&limit=250'
-			});
-			var InviteeCollection = Backbone.Collection.extend({
-				model: InviteeModel,
-				//url : 'http://twinvite.myt:8000/api/invitee/?format=json'
-				//url: 'data.json',
-				url: 'http://localhost:8090/data/invitee.json'
-    	});
 			
-
 			/////////////////////////////////////////////////////////////////////////////////Seed Data
 			SeedView = Backbone.View.extend({
 				initialize: function(){
-					this.collection.fetch();
+					//this.collection.fetch();
 					this.listenTo(this.collection,'reset',this.onUpdate)
 					console.log (this.collection);
 				},
@@ -78,17 +74,68 @@
 					},this);
 				}
 			});
-			var SeedModel = Backbone.Model.extend({
-				//urlRoot: './data/data.json'
-				url: 'http://localhost:8090/data/seed.json'
-				//url: 'http://twinvite.myt:8000/api/v1/invitee/?format=json&limit=250'
+
+			var InviteeModel = Backbone.Model.extend({
+				url: 'http://localhost:8090/data/invitee.json'				
 			});
+			var InviteeCollection = Backbone.Collection.extend({
+				model: InviteeModel,
+				url: 'http://localhost:8090/data/invitee.json'
+    	});
+			
+			var SeedModel = Backbone.Model.extend();
 			var SeedCollection = Backbone.Collection.extend({
 				model: SeedModel,
-				//url : 'http://twinvite.myt:8000/api/invitee/?format=json'
-				//url: 'data.json',
 				url: 'http://localhost:8090/data/seed.json'
     	});
+
+    	FeedProcessor = function(myCollection){
+    		this.collection = myCollection;
+    		console.log(this.collection.models);
+    	}
+    	FeedProcessor.prototype = {
+    		get:function(what,arg){
+    			return this['_'+what](arg);
+    		},
+    		_allEntries:function(arg){
+    			return this.collection.models
+    		},
+    		_entree:function(arg){
+    			return this.collection.models[arg];
+    		}, 
+    		_accepted:function(arg){
+    			return this.collection.models[arg].attributes.accepted
+    		},
+    		_currentSeeder:function(arg){
+    			return this.collection.models[arg].attributes.currentSeed
+    		},
+    		_event:function(arg){
+    			return this.collection.models[arg].attributes.event
+    		}, 
+    		_handle:function(arg){
+    			return this.collection.models[arg].attributes.handle
+    		},
+    		_id:function(arg){
+    			return this.collection.models[arg].attributes.id
+    		},
+    		_inviter:function(arg){
+    			return this.collection.models[arg].attributes.inviter
+    		},
+    		_isSeeder:function(arg){
+    			return this.collection.models[arg].attributes.seeder
+    		},
+    		_seedId:function(arg){
+    			return this.collection.models[arg].attributes.id
+    		},
+    		_seedMaxSeederChain:function(arg){
+    			return this.collection.models[arg].attributes.max_seeder_chain
+    		},
+    		_seederHandle:function(arg){
+    			return this.collection.models[arg].attributes.seeder
+    		}
+    		
+    	}
+
 		</script>
 	</head>
 	<body>
