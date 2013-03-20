@@ -49,7 +49,7 @@
 						if (this._p.get('currentSeeder', i) == null){
 							console.log(this._p.get('handle',i));
 							var result = false;
-							this._p.get('findNextChain', i);
+							this._p.get('findNextInChain', i);
 						}
 					},this);
 				}
@@ -66,12 +66,7 @@
 					console.log (this.collection);
 
 					_.each(this.collection.models,function(e,i){
-						/*var seedHandle = e.attributes.seeder;
-						seedHandle = seedHandle.replace(/@/g,'');
-						seedHandle = seedHandle.replace(/\s+/g, '');
-					
-						this.$el.append("<h2>#"+seedHandle+"</h2>");
-						this.$el.append('<img src="https://api.twitter.com/1/users/profile_image?screen_name='+seedHandle+'&size=bigger" /><br/>');*/
+						
 					},this);
 				}
 			});
@@ -100,6 +95,12 @@
     	FeedProcessor.prototype = {
     		get:function(what,arg){
     			return this['_'+what](arg);
+    		},
+    		_inviteeDataLength:function(arg){
+    			return this.inviteeCollection.models.length;
+    		},
+    		_seedDataLength:function(arg){
+    			return this.seedCollection.models.length;
     		},
     		_allEntries:function(arg){
     			return this.inviteeCollection.models;
@@ -137,19 +138,21 @@
     		_seederHandle:function(arg){
     			return this.seedCollection.models[arg].attributes.seeder;
     		}, 
-    		_findNextChain:function(arg){
-    			//Return 1 if invitee found, run function again;
-    			//Return 0 if no invitee found 
-    			for (var j=0; j < this.inviteeCollection.models.length; j++){
-						if (this.inviteeCollection.models[j].attributes.inviter != null){
-							if(this.inviteeCollection.models[arg].attributes.handle == this.inviteeCollection.models[j].attributes.inviter){
-								console.log(j+":"+this.inviteeCollection.models[j].attributes.handle);
-								matchFound = true;
-								arg = j;
-							}								
+    		_findNextInChain:function(arg){    			
+					for (var i = 0; i < this._inviteeDataLength(); i++) {
+						if(this.inviteeCollection.models[i].attributes.inviter != null){
+							var handle = this._handle(arg);
+							var inviter = this._inviter(i);
+							//remove spaces for accurate comparison
+							handle = handle.replace(/\s+/g, '');
+							inviter = inviter.replace(/\s+/g, '');
+
+							if (handle == inviter){
+								console.log("entry:"+(i+1)+":"+this._handle(i));
+								arg = i;
+							}					
 						}
 					}
-
     		}
     	}
 
