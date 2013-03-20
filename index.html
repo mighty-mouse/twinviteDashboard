@@ -8,29 +8,29 @@
 		<script type="text/javascript">
 			$(document).ready(
 				function(){
-					
 					myInviteeCollection = new InviteeCollection();
-					pr = new FeedProcessor(myInviteeCollection);
+					mySeedCollection = new SeedCollection();
+					mySeedCollection.fetch();
 
-					invitee = new InviteeView(
-					{
+					pr = new FeedProcessor(myInviteeCollection, mySeedCollection);
+					
+
+					invitee = new InviteeView({
 						el:"#invitee",
 						collection:myInviteeCollection,
 						process:pr
-					}
-					);
-					mySeedCollection = new SeedCollection();
-					mySeedCollection.fetch();
-					seed = new SeedView(
-					{
+					});
+					
+					seed = new SeedView({
 						el:"#seed",
 						collection:mySeedCollection
-					}
-					);
-				}
-				);
+					});
+				});
 
 			/////////////////////////////////////////////////////////////////////////////////Invitee Data 
+
+			var inviteeArray = {};
+			
 			InviteeView = Backbone.View.extend({
 				initialize: function(){
 					//this.collection.sync('read',this);
@@ -41,15 +41,16 @@
 				},
 				onUpdate:function(){
 					//how to reference  information within the feedProcessor
-					console.log (this._p.get('handle',5));
+					console.log (this.collection);
+//					console.log (this._p.get('handle',5));
 					//this._p.get('invitee',2);
-					_.each(this.collection.models,function(e,i){
-						/*var userHandle = e.attributes.handle;
-						//remove @ and any spaces
-						userHandle = userHandle.replace(/@/g,'');
-						userHandle = userHandle.replace(/\s+/g, '');
-						this.$el.append("<h4>@"+userHandle+"</h4>");
-						this.$el.append('<img src="https://api.twitter.com/1/users/profile_image?screen_name='+userHandle+'&size=bigger" /><br/>');*/
+					_.each(this.collection.models, function(e,i){
+
+						if (this._p.get('currentSeeder', i) == null){
+							console.log(this._p.get('handle',i));
+							var result = false;
+							this._p.get('findNextChain', i);
+						}
 					},this);
 				}
 			});
@@ -63,14 +64,14 @@
 				},
 				onUpdate:function(){
 					console.log (this.collection);
+
 					_.each(this.collection.models,function(e,i){
-						
-						var seedHandle = e.attributes.seeder;
+						/*var seedHandle = e.attributes.seeder;
 						seedHandle = seedHandle.replace(/@/g,'');
 						seedHandle = seedHandle.replace(/\s+/g, '');
 					
 						this.$el.append("<h2>#"+seedHandle+"</h2>");
-						this.$el.append('<img src="https://api.twitter.com/1/users/profile_image?screen_name='+seedHandle+'&size=bigger" /><br/>');
+						this.$el.append('<img src="https://api.twitter.com/1/users/profile_image?screen_name='+seedHandle+'&size=bigger" /><br/>');*/
 					},this);
 				}
 			});
@@ -89,51 +90,68 @@
 				url: 'http://localhost:8090/data/seed.json'
     	});
 
-    	FeedProcessor = function(myCollection){
-    		this.collection = myCollection;
-    		console.log(this.collection.models);
+    	FeedProcessor = function(inviteeCollection, seedCollection){
+    		this.inviteeCollection = inviteeCollection;
+    		this.seedCollection = seedCollection;
+    		console.log(this.inviteeCollection.models);
+    		console.log(this.seedCollection.models);
     	}
+
     	FeedProcessor.prototype = {
     		get:function(what,arg){
     			return this['_'+what](arg);
     		},
     		_allEntries:function(arg){
-    			return this.collection.models
+    			return this.inviteeCollection.models;
     		},
-    		_entree:function(arg){
-    			return this.collection.models[arg];
+    		_entry:function(arg){
+    			return this.inviteeCollection.models[arg];
     		}, 
     		_accepted:function(arg){
-    			return this.collection.models[arg].attributes.accepted
+    			return this.inviteeCollection.models[arg].attributes.accepted;
     		},
     		_currentSeeder:function(arg){
-    			return this.collection.models[arg].attributes.currentSeed
+    			return this.inviteeCollection.models[arg].attributes.current_seed;
     		},
     		_event:function(arg){
-    			return this.collection.models[arg].attributes.event
+    			return this.inviteeCollection.models[arg].attributes.event;
     		}, 
     		_handle:function(arg){
-    			return this.collection.models[arg].attributes.handle
+    			return this.inviteeCollection.models[arg].attributes.handle;
     		},
     		_id:function(arg){
-    			return this.collection.models[arg].attributes.id
+    			return this.inviteeCollection.models[arg].attributes.id;
     		},
     		_inviter:function(arg){
-    			return this.collection.models[arg].attributes.inviter
+    			return this.inviteeCollection.models[arg].attributes.inviter;
     		},
     		_isSeeder:function(arg){
-    			return this.collection.models[arg].attributes.seeder
+    			return this.inviteeCollection.models[arg].attributes.seeder;
     		},
     		_seedId:function(arg){
-    			return this.collection.models[arg].attributes.id
+    			return this.seedCollection.models[arg].attributes.id;
     		},
     		_seedMaxSeederChain:function(arg){
-    			return this.collection.models[arg].attributes.max_seeder_chain
+    			return this.seedCollection.models[arg].attributes.max_seeder_chain;
     		},
     		_seederHandle:function(arg){
-    			return this.collection.models[arg].attributes.seeder
+    			return this.seedCollection.models[arg].attributes.seeder;
+    		}, 
+    		_findNextChain:function(arg){
+    			//Return 1 if invitee found, run function again;
+    			//Return 0 if no invitee found 
+    			var matchFound = false;
+    			
+	    			for (var j=0; j < this.inviteeCollection.models.length; j++){
+							if (this.inviteeCollection.models[j].attributes.inviter != null){
+								if(this.inviteeCollection.models[arg].attributes.handle == this.inviteeCollection.models[j].attributes.inviter){
+									console.log(j+":"+this.inviteeCollection.models[j].attributes.handle);
+									matchFound = true;
+								}																					
+							}
+						}
+					
     		}
-    		
     	}
 
 		</script>
