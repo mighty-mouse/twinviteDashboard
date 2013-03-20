@@ -140,17 +140,16 @@
     		_findNextChain:function(arg){
     			//Return 1 if invitee found, run function again;
     			//Return 0 if no invitee found 
-    			var matchFound = false;
-    			
-	    			for (var j=0; j < this.inviteeCollection.models.length; j++){
-							if (this.inviteeCollection.models[j].attributes.inviter != null){
-								if(this.inviteeCollection.models[arg].attributes.handle == this.inviteeCollection.models[j].attributes.inviter){
-									console.log(j+":"+this.inviteeCollection.models[j].attributes.handle);
-									matchFound = true;
-								}																					
-							}
+    			for (var j=0; j < this.inviteeCollection.models.length; j++){
+						if (this.inviteeCollection.models[j].attributes.inviter != null){
+							if(this.inviteeCollection.models[arg].attributes.handle == this.inviteeCollection.models[j].attributes.inviter){
+								console.log(j+":"+this.inviteeCollection.models[j].attributes.handle);
+								matchFound = true;
+								arg = j;
+							}								
 						}
-					
+					}
+
     		}
     	}
 
