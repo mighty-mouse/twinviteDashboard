@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<link rel="stylesheet" type="text/css" href="css/style.css">
+
 		<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
 		<script type="text/javascript" src="js/underscore-min.js"></script>
 		<script type="text/javascript" src="js/backbone-min.js"></script>
@@ -135,6 +137,14 @@
     		_seederHandle:function(arg){
     			return this.seedCollection.models[arg].attributes.seeder;
     		}, 
+    		_cleanUpUserHandle: function (handle) {
+   				var tempStr = handle;
+   				//remove spaces
+   				var tempStr = tempStr.replace(/\s+/g, '');
+   				//remove @ symbol
+   				var tempStr = tempStr.replace(/@/g, '');
+   				return tempStr
+   			},
     		//simply matches invitee handle to the inviter handle
     		_findNextInChain:function(arg){    			
 					for (var i = 0; i < this._inviteeDataLength(); i++) {
@@ -154,8 +164,8 @@
     		//**proper method**
     		//similar to the findNextInChain function, only that it will be based off of the seeder list, not invitees
     		_inviteesOfSeeder: function (seederHandle) {
-    			var htmlOutput = '<div id=\'chain\'> <ul> <li id=\'chainSeeder\'>' + seederHandle.replace(/@/g, '') + '</li>';		
-    			console.log("seeder : " + seederHandle);
+    			var htmlOutput = '<div id=\'chain\'> <ul> <li id=\'chainSeeder\'><span id=\'userHandle\'>' + seederHandle.replace(/@/g, '') + '</span><img id=\'avatar\' src="https://api.twitter.com/1/users/profile_image?screen_name='+ this._cleanUpUserHandle(seederHandle) + '\" /></li>';		
+    			//console.log("seeder : " + seederHandle);
   				var currentHandle = seederHandle;
   				for (var i = 0; i < this._inviteeDataLength(); i++){
     				if (this._inviter(i) != null){
@@ -166,33 +176,29 @@
 								handle = handle.replace(/\s+/g, '');
 								inviter = inviter.replace(/\s+/g, '');
 								if (handle == inviter){
-									console.log("entry:"+(i+1)+":"+this._handle(i));
-									var tempStr = this._handle(i);
-									tempStr = tempStr.replace(/\s+/g, '');
-									tempStr = tempStr.replace(/@/g, '');
-									htmlOutput += '<li id=\'chainChild\'>' + tempStr + '</li>';
+									//console.log("entry:"+(i+1)+":"+this._handle(i));
+
+									//clean up username before adding to htmlOutput								
+									var tempStr = this._cleanUpUserHandle(this._handle(i));
+									/*tempStr = tempStr.replace(/\s+/g, '');
+									tempStr = tempStr.replace(/@/g, '');*/
+								
+									htmlOutput += '<li id=\'chainChild\'><span id=\'userHandle\'>' + tempStr + '</span><img id=\'avatar\' src=\"https://api.twitter.com/1/users/profile_image?screen_name='+tempStr+'\" /></li>';
+
 									currentHandle = this._handle(i);
 								}				
 	    				}
     				}
     			}
-    			htmlOutput += '</ul> </div>';
+    			htmlOutput += '</ul> </div> <br/>';
     			//console.log(htmlOutput);
     			$('#invitee').append(htmlOutput);
    			}
-    	}
 
+   			
+    	}
 		</script>
-		<script id='invitees-Template' type='text/template'>
-			<ul>
-				<% for (var i = 0; i < books.length; i++) { %>
-					<% var book = books[i]; %>
-					<li>
-					<em><%= book.title %></em> by <%= book.author %>
-					</li>
-				<% } %>
-			</ul>
-		</script>
+		
 	</head>
 	<body>
 		<div id="invitee">
