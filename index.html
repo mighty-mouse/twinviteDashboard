@@ -38,14 +38,14 @@
 				},
 				onUpdate:function(){
 					
-					console.log('===Method 1: match invitee handle to inviter handle===');
+					/*console.log('===Method 1: match invitee handle to inviter handle===');
 					_.each(this.collection.models, function(e,i){
 						if (this._p.get('currentSeeder', i) == null){
 							console.log(this._p.get('handle', i));
 							this._p.get('findNextInChain', i);
 						}
 					},this);
-					console.log('===End of Method 1===');
+					console.log('===End of Method 1===');*/
 				}
 			});
 			
@@ -58,12 +58,11 @@
 					//console.log (this.collection);
 				},
 				onUpdate:function(){
-					//console.log (this.collection);
 					console.log('===Method 2: match invitee handle to inviter handle==');
 					_.each(this.collection.models, function(e,i){
-						//console.log(this._p.get('seederHandle',i));
+						//MODIFY invitees of seeder method to re
 						this._p.get('inviteesOfSeeder', this._p.get('seederHandle',i));
-						//console.log("call seederHandle : " +i);
+						//this.$el.append("<h4>"+userHandle+"</h4>");
 					},this);
 					console.log('===End of Method 2===');
 				}
@@ -154,43 +153,50 @@
     		},
     		//**proper method**
     		//similar to the findNextInChain function, only that it will be based off of the seeder list, not invitees
-    		_inviteesOfSeeder: function (seederHandle) {		
+    		_inviteesOfSeeder: function (seederHandle) {
+    			var htmlOutput = '<div id=\'chain\'> <ul> <li id=\'chainSeeder\'>' + seederHandle.replace(/@/g, '') + '</li>';		
     			console.log("seeder : " + seederHandle);
-    			//1 get seeder handle
-    		//	for (var i = 0; i < this._seedDataLength(); i++){
-    				//2 match it to the invitee handle, make condition to check if the inviter field is also null (means that they are the top of the inviter list)
-    				var currentHandle = seederHandle;
-    				for (var i = 0; i < this._inviteeDataLength(); i++){
-	    				if (this._inviter(i) != null){
-		    				if (currentHandle == this._inviter(i) ){
-		    					var handle = currentHandle;
-									var inviter = this._inviter(i);
-									//console.log(i+":"+handle);
-									//remove spaces for accurate comparison
-									handle = handle.replace(/\s+/g, '');
-									inviter = inviter.replace(/\s+/g, '');
-									if (handle == inviter){
-										console.log("entry:"+(i+1)+":"+this._handle(i));
-										currentHandle = this._handle(i);
-									}				
-		    				}
+  				var currentHandle = seederHandle;
+  				for (var i = 0; i < this._inviteeDataLength(); i++){
+    				if (this._inviter(i) != null){
+	    				if (currentHandle == this._inviter(i) ){
+	    					var handle = currentHandle;
+								var inviter = this._inviter(i);
+								//remove spaces for accurate comparison
+								handle = handle.replace(/\s+/g, '');
+								inviter = inviter.replace(/\s+/g, '');
+								if (handle == inviter){
+									console.log("entry:"+(i+1)+":"+this._handle(i));
+									var tempStr = this._handle(i);
+									tempStr = tempStr.replace(/\s+/g, '');
+									tempStr = tempStr.replace(/@/g, '');
+									htmlOutput += '<li id=\'chainChild\'>' + tempStr + '</li>';
+									currentHandle = this._handle(i);
+								}				
 	    				}
-	    			}
-
-    				//3 match remainding invitee names to inviter names to finish invitation chain
+    				}
     			}
-    		//}
-
+    			htmlOutput += '</ul> </div>';
+    			//console.log(htmlOutput);
+    			$('#invitee').append(htmlOutput);
+   			}
     	}
 
+		</script>
+		<script id='invitees-Template' type='text/template'>
+			<ul>
+				<% for (var i = 0; i < books.length; i++) { %>
+					<% var book = books[i]; %>
+					<li>
+					<em><%= book.title %></em> by <%= book.author %>
+					</li>
+				<% } %>
+			</ul>
 		</script>
 	</head>
 	<body>
 		<div id="invitee">
-			<ul></ul>
 		</div>
-		<div id="seed">
-			<ul></ul>
-		</div>
+
 	</body>
 </html>
