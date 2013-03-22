@@ -161,30 +161,23 @@
 						}
 					}
     		},
-    		//**proper method**
+    		
+    		
     		//similar to the findNextInChain function, only that it will be based off of the seeder list, not invitees
     		_inviteesOfSeeder: function (seederHandle) {
-    			var htmlOutput = '<div id=\'chain\'> <ul> <li id=\'chainSeeder\'><span id=\'userHandle\'>' + seederHandle.replace(/@/g, '') + '</span><img id=\'avatar\' src="https://api.twitter.com/1/users/profile_image?screen_name='+ this._cleanUpUserHandle(seederHandle) + '\" /></li>';		
+    			var htmlOutput = '<div id=\'chain\'> <ul> <li id=\'chainSeeder\'><img id=\'avatar\' src="https://api.twitter.com/1/users/profile_image?screen_name='+ this._cleanUpUserHandle(seederHandle) + '\" /><span id=\'userHandle\'>' + seederHandle.replace(/@/g, '') + '</span></li>';		
     			//console.log("seeder : " + seederHandle);
   				var currentHandle = seederHandle;
   				for (var i = 0; i < this._inviteeDataLength(); i++){
     				if (this._inviter(i) != null){
 	    				if (currentHandle == this._inviter(i) ){
-	    					var handle = currentHandle;
-								var inviter = this._inviter(i);
-								//remove spaces for accurate comparison
-								handle = handle.replace(/\s+/g, '');
-								inviter = inviter.replace(/\s+/g, '');
+	    					var handle = this._cleanUpUserHandle(currentHandle);
+								var inviter = this._cleanUpUserHandle(this._inviter(i));					
 								if (handle == inviter){
 									//console.log("entry:"+(i+1)+":"+this._handle(i));
 
-									//clean up username before adding to htmlOutput								
-									var tempStr = this._cleanUpUserHandle(this._handle(i));
-									/*tempStr = tempStr.replace(/\s+/g, '');
-									tempStr = tempStr.replace(/@/g, '');*/
-								
-									htmlOutput += '<li id=\'chainChild\'><span id=\'userHandle\'>' + tempStr + '</span><img id=\'avatar\' src=\"https://api.twitter.com/1/users/profile_image?screen_name='+tempStr+'\" /></li>';
-
+									var tempStr = this._cleanUpUserHandle(this._handle(i));								
+									htmlOutput += '<li id=\'chainChild\'><img id=\'avatar\' src=\"https://api.twitter.com/1/users/profile_image?screen_name='+tempStr+'\" /><span id=\'userHandle\'>' + tempStr + '</span></li>';
 									currentHandle = this._handle(i);
 								}				
 	    				}
