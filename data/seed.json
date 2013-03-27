@@ -98,5 +98,60 @@
         "id": 31,
         "max_seeder_chain": "10",
         "seeder": "@styleblog"
+    },
+    {
+        "id": 32,
+        "max_seeder_chain": "10",
+        "seeder": "@tanya_kim"
+    },
+    {
+        "id": 33,
+        "max_seeder_chain": "10",
+        "seeder": "@dobbernation"
+    },
+    {
+        "id": 34,
+        "max_seeder_chain": "10",
+        "seeder": "@geekigirl"
+    },
+    {
+        "id": 35,
+        "max_seeder_chain": "10",
+        "seeder": "@aliyajasmine"
+    },
+    {
+        "id": 36,
+        "max_seeder_chain": "10",
+        "seeder": "@bradenrosner"
+    },
+    {
+        "id": 37,
+        "max_seeder_chain": "10",
+        "seeder": "@richardlambert"
+    },
+    {
+        "id": 38,
+        "max_seeder_chain": "10",
+        "seeder": "@kimkardashian"
+    },
+    {
+        "id": 39,
+        "max_seeder_chain": "10",
+        "seeder": "@justinbieber"
+    },
+    {
+        "id": 40,
+        "max_seeder_chain": "10",
+        "seeder": "@tiyanagrulovic"
+    },
+    {
+        "id": 41,
+        "max_seeder_chain": "10",
+        "seeder": "@lenadunham"
+    },
+    {
+        "id": 42,
+        "max_seeder_chain": "10",
+        "seeder": "@backseatstylers"
     }
 ]

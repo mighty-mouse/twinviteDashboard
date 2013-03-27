@@ -34,20 +34,11 @@
 			InviteeView = Backbone.View.extend({
 				initialize: function(){
 					this._p = this.options.process;
-					//this.collection.fetch();
+					this.collection.fetch();
 					this.listenTo(this.collection,'reset',this.onUpdate)
 					//console.log (this.collection);
 				},
 				onUpdate:function(){
-					
-					/*console.log('===Method 1: match invitee handle to inviter handle===');
-					_.each(this.collection.models, function(e,i){
-						if (this._p.get('currentSeeder', i) == null){
-							console.log(this._p.get('handle', i));
-							this._p.get('findNextInChain', i);
-						}
-					},this);
-					console.log('===End of Method 1===');*/
 				}
 			});
 			
@@ -60,13 +51,10 @@
 					//console.log (this.collection);
 				},
 				onUpdate:function(){
-					console.log('===Method 2: match invitee handle to inviter handle==');
-					_.each(this.collection.models, function(e,i){
-						//MODIFY invitees of seeder method to re
-						this._p.get('inviteesOfSeeder', this._p.get('seederHandle',i));
-						//this.$el.append("<h4>"+userHandle+"</h4>");
-					},this);
-					console.log('===End of Method 2===');
+					//go through each seeder and find invitees in the seeder chain
+					_.each(this.collection.models, function(e,i){					
+						this._p.get('inviteesOfSeeder', this._p.get('seederHandle',i));					
+					},this);					
 				}
 			});
 
@@ -76,12 +64,14 @@
 			var InviteeCollection = Backbone.Collection.extend({
 				model: InviteeModel,
 				url: 'http://localhost:8090/data/invitee.json'
+				//url: 'http://twinvite.myt:8000/api/v1/invitee/?format=json&user=ed&key=abcdefg&limit=1550'
     	});
 			
 			var SeedModel = Backbone.Model.extend();
 			var SeedCollection = Backbone.Collection.extend({
 				model: SeedModel,
 				url: 'http://localhost:8090/data/seed.json'
+				//url: 'http://twinvite.myt:8000/api/v1/seed/?format=json&user=ed&key=abcdefg&limit=1250'
     	});
 
     	FeedProcessor = function(inviteeCollection, seedCollection){
@@ -139,10 +129,9 @@
     		}, 
     		_cleanUpUserHandle: function (handle) {
    				var tempStr = handle;
-   				//remove spaces
-   				var tempStr = tempStr.replace(/\s+/g, '');
-   				//remove @ symbol
-   				var tempStr = tempStr.replace(/@/g, '');
+   				//remove spaces and @ symbol
+   				var tempStr = tempStr.replace(/\s+/g, '');			
+					tempStr = tempStr.replace(/@/g, '');
    				return tempStr
    			},
     		//simply matches invitee handle to the inviter handle
@@ -161,11 +150,9 @@
 						}
 					}
     		},
-    		
-    		
     		//similar to the findNextInChain function, only that it will be based off of the seeder list, not invitees
     		_inviteesOfSeeder: function (seederHandle) {
-    			var htmlOutput = '<div id=\'chain\'> <ul> <li id=\'chainSeeder\'><img id=\'avatar\' src="https://api.twitter.com/1/users/profile_image?screen_name='+ this._cleanUpUserHandle(seederHandle) + '\" /><span id=\'userHandle\'>' + seederHandle.replace(/@/g, '') + '</span></li>';		
+    			var htmlOutput = '<div id=\'chain\'> <ul> <li id=\'chainSeeder\'><img id=\'avatar\' src="https://api.twitter.com/1/users/profile_image?screen_name='+ this._cleanUpUserHandle(seederHandle) + '&size=bigger\" /><span id=\'userHandle\'>@' + seederHandle.replace(/@/g, '') + '</span></li>';		
     			//console.log("seeder : " + seederHandle);
   				var currentHandle = seederHandle;
   				for (var i = 0; i < this._inviteeDataLength(); i++){
@@ -177,25 +164,32 @@
 									//console.log("entry:"+(i+1)+":"+this._handle(i));
 
 									var tempStr = this._cleanUpUserHandle(this._handle(i));								
-									htmlOutput += '<li id=\'chainChild\'><img id=\'avatar\' src=\"https://api.twitter.com/1/users/profile_image?screen_name='+tempStr+'\" /><span id=\'userHandle\'>' + tempStr + '</span></li>';
+									htmlOutput += 
+									'<li id=\'chainChild\'><hr/><img id=\'avatar\' src=\"https://api.twitter.com/1/users/profile_image?screen_name='+tempStr+'&size=bigger\" /><span id=\'userHandle\'>@' + tempStr + '</span></li>';
 									currentHandle = this._handle(i);
 								}				
 	    				}
     				}
     			}
-    			htmlOutput += '</ul> </div> <br/>';
+    			htmlOutput += '</ul> </div>';
     			//console.log(htmlOutput);
     			$('#invitee').append(htmlOutput);
    			}
-
-   			
     	}
 		</script>
 		
 	</head>
 	<body>
-		<div id="invitee">
+		<div id="nav">
+			<div id="logo">
+				<span class="icon">
+					<span class="logoText">TwInvite Dashboard</span>
+				</span>
+			</div>
 		</div>
-
+		<div id="container">
+			<div id="invitee">
+			</div>	
+		</div>		
 	</body>
 </html>

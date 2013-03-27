@@ -30,6 +30,9 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
+	font:16px/18px Georgia,"Times New Roman",Palatino,serif;
+	background-color: #3c8fc9;
+	min-height: 100%;
 }
 ol, ul {
 	list-style: none;
@@ -47,9 +50,79 @@ table {
 	border-spacing: 0;
 }
 
-#chain {
-	color: white;
-	border:5px inset gray;
-	width:15%;
-	background-color: #333333;
+#nav {
+	height:40px;
+	background-image: url(/images/nav-bg.png);
+	background-repeat: repeat-x;
+	box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, .3);
 }
+#container {
+	position: relative;
+	padding: 54px 14px 15px;
+	width: 837px;
+	margin: 0 auto;	
+}
+#logo {
+	width: 837px;
+	margin: 0 auto;
+}
+.icon {
+	margin-top: 10px;
+	display: inline-block;
+	vertical-align: text-top;
+	background-image: url(/images/twitter-icon.png);
+	background-position: 0 0;
+	background-repeat: no-repeat;
+	text-align: center;
+	height: 20px;
+}
+.logoText{
+	border: 0;
+	clip: rect(0 0 0 0);
+	height: 13px;
+	margin: 5px;
+	padding: 30px;
+	width: 16px;
+	font-family: Helvetica,sans-serif;
+	color: white;
+}
+#chain {
+	border:0px solid #999999;
+	width:29%;
+	background-color: #fff;
+	float: left;
+	display: inline;
+	margin: 5px 5px 5px 5px;
+	padding: 10px 10px 5px 10px; 
+
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+
+	-webkit-box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, .3);
+	box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, .3);
+}
+#chainSeeder {
+
+}
+#avatar{
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, .3);
+	-webkit-box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, .3);
+}
+#userHandle {
+	color: #0084b4;
+	margin-left: 5px;
+	vertical-align: top;
+}
+hr {
+    display : list-item;
+    list-style : url(/images/down-arrow.png) inside;
+    filter : alpha(opacity=0);
+    margin-left: 26px;
+    width : 0;
+    border: 0px;
+}
+
